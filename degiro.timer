@@ -1,0 +1,9 @@
+[Unit]
+Description=Periodical checking Degiro every 2 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=2min 
+
+[Install]
+WantedBy=degiro.service

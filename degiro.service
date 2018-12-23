@@ -1,0 +1,9 @@
+[Unit]
+Description=Check Degiro accounts
+
+[Service]
+Type=oneshot
+ExecStart=/home/josh/git/get-rich-slowly/main.py
+User=josh
+Group=systemd-journal
+

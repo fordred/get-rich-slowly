@@ -46,10 +46,10 @@ class Portfolio:
             for row in reader:
                 if row['Product'] == 'CASH & CASH FUND (EUR)':
                     self.cash = row['Waarde in EUR']
-                elif row['Product'] == 'CASH & CASH FUND (USD)':
-                    pass
-                else:
-                    self.funds.append(row)
+                # elif row['Product'] == 'CASH & CASH FUND (USD)':
+                #     pass
+                # else:
+                self.funds.append(row)
 
     def get_money_amount(self):
         return {'cash': dutch_float(self.cash)}
@@ -57,15 +57,36 @@ class Portfolio:
     def get_active_portfolio(self):
         converted = []
         for f in self.funds:
-            converted.append({
-                'fund': {
-                    'currency': f['Lokale waarde'],
-                    'name': f['Product'],
-                    'isin': f['Symbool/ISIN'],
-                },
-                'totVal': dutch_float(f['Waarde in EUR']),
-                'size': dutch_float(f['Aantal']),
-            })
+            if f['Product'] == 'CASH & CASH FUND (EUR)':
+                converted.append({
+                    'fund': {
+                        'currency': f['Lokale waarde'],
+                        'name': f['Product'],
+                        'isin': f['Symbool/ISIN'],
+                    },
+                    'totVal': dutch_float(f['Waarde in EUR']),
+                    'size': dutch_float(f['']),
+                })
+            elif f['Product'] == 'CASH & CASH FUND (USD)':
+                converted.append({
+                    'fund': {
+                        'currency': f['Lokale waarde'],
+                        'name': f['Product'],
+                        'isin': f['Symbool/ISIN'],
+                    },
+                    'totVal': dutch_float(f['Waarde in EUR']),
+                    'size': dutch_float(f['']),
+                })
+            else:
+                converted.append({
+                    'fund': {
+                        'currency': f['Lokale waarde'],
+                        'name': f['Product'],
+                        'isin': f['Symbool/ISIN'],
+                    },
+                    'totVal': dutch_float(f['Waarde in EUR']),
+                    'size': dutch_float(f['Aantal']),
+                })
 
         return converted
 
